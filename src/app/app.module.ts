@@ -7,13 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { ResultsComponent } from './results/results.component';
 import { StartPageComponent } from './start-page/start-page.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopMenuComponent,
     ResultsComponent,
-    StartPageComponent
+    StartPageComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
