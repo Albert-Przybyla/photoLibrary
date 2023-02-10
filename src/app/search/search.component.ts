@@ -7,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
+  public slected: number = 2;
+
+  public tab = [
+    { id: 0, name: "dsaads1`2" },
+    { id: 1, name: "dsaadweqrs" },
+    { id: 2, name: "dsaqwerqewads" },
+    { id: 3, name: "dsaeqfrdsaads" }
+  ]
+
   constructor() { }
 
   ngOnInit(): void {

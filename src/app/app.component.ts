@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { PhotoService } from './services/photo.service';
 
 @Component({
@@ -6,17 +6,22 @@ import { PhotoService } from './services/photo.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  @ViewChild('site2', { static: true }) site2: any;
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    let poz = window.scrollY;
+    let height = window.innerHeight;
+    // console.log(poz)
+    // console.log(height)
+    if (poz >= height / 2) {
+      this.scrollToElement();
+    }
+  }
+
   title = 'photoLibrary';
-
-  public slected: number = 2;
-
-  public tab = [
-    { id: 0, name: "dsaads1`2" },
-    { id: 1, name: "dsaadweqrs" },
-    { id: 2, name: "dsaqwerqewads" },
-    { id: 3, name: "dsaeqfrdsaads" }
-  ]
 
   constructor(private _photo: PhotoService) { }
 
@@ -28,6 +33,11 @@ export class AppComponent {
     this._photo.photos().subscribe(obj => {
       console.log(obj)
     })
+  }
+
+  private scrollToElement(): void {
+    console.log("scrolllll")
+    this.site2.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
 
