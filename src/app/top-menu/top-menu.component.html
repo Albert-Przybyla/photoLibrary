@@ -1,1 +1,21 @@
-<p>top-menu works!</p>
+<div class="content" [class.site2color]="color">
+    <div class="logo">
+        PhotoLibrary
+    </div>
+    <div class="search">
+        <app-search></app-search>
+    </div>
+
+    <div class="liked" (click)="openMenu()">
+        <div class="icon">
+            <ng-container *ngIf="!likedMenu; then menuClose; else menuOpen"></ng-container>
+            <ng-template #menuClose>
+                <img src="../../assets/img/heart-regular.svg" alt="My Happy SVG">
+            </ng-template>
+            <ng-template #menuOpen>
+                <img #menuOpen src="../../assets/img/heart-solid.svg" alt="My Happy SVG">
+            </ng-template>
+        </div>
+    </div>
+
+</div>

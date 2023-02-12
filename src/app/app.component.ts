@@ -8,17 +8,24 @@ import { PhotoService } from './services/photo.service';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('site2', { static: true }) site2: any;
+  public lastPoz: number = 0;
+  public menuColor: boolean = false;
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     let poz = window.scrollY;
     let height = window.innerHeight;
-    // console.log(poz)
-    // console.log(height)
-    if (poz >= height / 2) {
-      this.scrollToElement();
+    if (poz >= height / 10 && poz < height) {
+      setTimeout(() => {
+        if (this.lastPoz >= poz)
+          this.scroll("site2")
+      }, 600)
     }
+    if (poz >= height * 0.8)
+      this.menuColor = true;
+    else
+      this.menuColor = false;
+    this.lastPoz = poz;
   }
 
   title = 'photoLibrary';
@@ -26,18 +33,15 @@ export class AppComponent implements OnInit {
   constructor(private _photo: PhotoService) { }
 
   ngOnInit(): void {
-    this.test()
   }
 
-  private test() {
-    this._photo.photos().subscribe(obj => {
-      console.log(obj)
-    })
-  }
+  scroll(name: string) {
+    document.getElementById(name)!.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest"
+    });
 
-  private scrollToElement(): void {
-    console.log("scrolllll")
-    this.site2.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
 

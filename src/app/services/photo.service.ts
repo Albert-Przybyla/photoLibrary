@@ -16,4 +16,8 @@ export class PhotoService {
         return this.http.get<any>(`${API_URL}/photos/?client_id=${API_KEY}`);
     }
 
+    public me(): Observable<any> {
+        return this.http.get<any>(`${API_URL}/me?client_id=${API_KEY}`);
+    }
+
 }

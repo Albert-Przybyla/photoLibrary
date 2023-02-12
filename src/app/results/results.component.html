@@ -1,3 +1,11 @@
 <div class="content">
-
+    <ng-container *ngIf="loading; then lading; else loaded"></ng-container>
+    <ng-template #lading>
+        <app-loader></app-loader>
+    </ng-template>
+    <ng-template #loaded>
+        <div class="list" *ngFor="let photo of photos">
+            <img [src]="photo.urls.regular" alt="">
+        </div>
+    </ng-template>
 </div>

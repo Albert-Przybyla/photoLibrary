@@ -1,0 +1,36 @@
+@import "../../variables.less";
+
+.content {
+    width: 100%;
+    height: 7vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: none;
+    border-bottom: 1px solid black;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all .5s;
+}
+
+.site2color {
+    background-color: @honeydew;
+    border: none;
+
+    .search {
+        display: contents;
+    }
+}
+
+.search {
+    display: none;
+}
+
+.liked {
+    height: 3vh;
+    width: 3vh;
+    padding: 2vh;
+    cursor: pointer;
+}
