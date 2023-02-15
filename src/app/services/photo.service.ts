@@ -12,8 +12,8 @@ const API_KEY: string = environment.API_KEY;
 export class PhotoService {
     constructor(private http: HttpClient) { }
 
-    public photos(): Observable<any> {
-        return this.http.get<any>(`${API_URL}/photos/?client_id=${API_KEY}`);
+    public photos(page: number): Observable<any> {
+        return this.http.get<any>(`${API_URL}/photos/?page=${page}&client_id=${API_KEY}`);
     }
 
     public me(): Observable<any> {

@@ -1,25 +1,20 @@
 <div class="content">
-    <ng-container *ngIf="loading; then lading; else loaded"></ng-container>
-    <ng-template #lading>
-        <app-loader></app-loader>
-    </ng-template>
-    <ng-template #loaded>
-        <div class="photo-container">
-            <div class="column">
-                <div class="photo" *ngFor="let photo of photoChunks.chunk1; let i = index">
-                    <img [src]="photo.urls.regular" alt="">
-                </div>
-            </div>
-            <div class="column">
-                <div class="photo" *ngFor="let photo of photoChunks.chunk2; let i = index">
-                    <img [src]="photo.urls.regular" alt="">
-                </div>
-            </div>
-            <div class="column">
-                <div class="photo" *ngFor="let photo of photoChunks.chunk3; let i = index">
-                    <img [src]="photo.urls.regular" alt="">
-                </div>
+    <div class="photo-container" *ngIf="!loading || page > 1">
+        <div class="column">
+            <div class="photo" *ngFor="let photo of photoChunks.chunk1; let i = index">
+                <img [src]="photo.urls.regular" alt="">
             </div>
         </div>
-    </ng-template>
+        <div class="column">
+            <div class="photo" *ngFor="let photo of photoChunks.chunk2; let i = index">
+                <img [src]="photo.urls.regular" alt="">
+            </div>
+        </div>
+        <div class="column">
+            <div class="photo" *ngFor="let photo of photoChunks.chunk3; let i = index">
+                <img [src]="photo.urls.regular" alt="">
+            </div>
+        </div>
+    </div>
+    <app-loader *ngIf="loading"></app-loader>
 </div>

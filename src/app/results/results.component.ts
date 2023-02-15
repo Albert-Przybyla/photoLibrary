@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, HostListener } from '@angular/core';
 import { PhotoService } from '../services/photo.service';
 import { PhotoChunks } from '../models/photo.model';
 
@@ -10,8 +10,24 @@ import { PhotoChunks } from '../models/photo.model';
 export class ResultsComponent implements OnInit, OnChanges {
   @Input('isSite2') isSite2: boolean = false;
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    var D = document;
+    let height = Math.max(
+      D.body.scrollHeight, D.documentElement.scrollHeight,
+      D.body.offsetHeight, D.documentElement.offsetHeight,
+      D.body.clientHeight, D.documentElement.clientHeight
+    );
+
+    if ((window.innerHeight + window.scrollY) >= height - 10) {
+      this.page++;
+      this.loadPhoto();
+    }
+  }
+
   public loading: boolean = false;
   public isFirst: boolean = true;
+  public page: number = 1
 
   public photos: any[] = [];
 
@@ -25,7 +41,15 @@ export class ResultsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.setSiteForResults();
+  }
+
+  private setSiteForResults(): void {
     if (this.isSite2 && this.isFirst) {
+      var h = window.innerHeight
+        || document.documentElement.clientHeight
+        || document.body.clientHeight;
+      window.scroll(0, h);
       this.loadPhoto();
       this.isFirst = false;
     }
@@ -39,7 +63,6 @@ export class ResultsComponent implements OnInit, OnChanges {
         pushTo = i;
       }
     }
-
     switch (pushTo) {
       case 0:
         this.photoChunks.chunk1.push(photo);
@@ -54,34 +77,16 @@ export class ResultsComponent implements OnInit, OnChanges {
         this.rowHeight[2] += photoHeight;
         break;
     }
-    //   if (this.rowHeight[0] <= this.rowHeight[1] && this.rowHeight[0] <= this.rowHeight[2]) {
-    //     this.photoChunks.chunk1.push(photo);
-    //     this.rowHeight[0] += photoHeight;
-    //     console.log(this.rowHeight)
-    //     return;
-    //   }
-
-    //   if (this.rowHeight[1] <= this.rowHeight[0] && this.rowHeight[1] <= this.rowHeight[2]) {
-    //     this.photoChunks.chunk2.push(photo);
-    //     this.rowHeight[1] += photoHeight;
-    //     console.log(this.rowHeight)
-    //     return;
-    //   }
-
-    //   if (this.rowHeight[2] <= this.rowHeight[1] && this.rowHeight[2] <= this.rowHeight[0]) {
-    //     this.photoChunks.chunk3.push(photo);
-    //     this.rowHeight[2] += photoHeight;
-    //     console.log(this.rowHeight)
-    //     return;
-    //   }
   }
 
   private loadPhoto() {
     this.loading = true;
-    this._photo.photos().subscribe(obj => {
+    console.log('hello')
+    this._photo.photos(this.page).subscribe(obj => {
       for (let i = 0; i < obj.length; i++) {
         this.filter(obj[i])
       }
+      this.page++;
       this.loading = false;
     })
   }
